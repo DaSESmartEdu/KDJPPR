@@ -1,0 +1,51 @@
+CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node 2 --nnodes 1 --node_rank 0 --master_addr localhost --master_port 6602 ./finetune.py \
+    --model_name_or_path "DeepSeek-R1-Distill-Qwen-1.5B" \
+    --data_path "./distill_data_example.json" \
+    --bf16 True \
+    --output_dir "output_deepseek_r1_qwen_1.5B" \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 32 \
+    --per_device_eval_batch_size 32 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 1000 \
+    --save_total_limit 10 \
+    --learning_rate 1e-5 \
+    --weight_decay 0.1 \
+    --adam_beta2 0.95 \
+    --warmup_ratio 0.01 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --report_to "none" \
+    --model_max_length 4096 \
+    --gradient_checkpointing True \
+    --lazy_preprocess True \
+    --deepspeed "./ds_config_zero2.json" \
+    --use_lora
+	
+
+
+CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node 2 --nnodes 1 --node_rank 0 --master_addr localhost --master_port 6603 ./finetune.py \
+    --model_name_or_path "Qwen2.5-14B model path" \
+    --data_path "../distill_data_example.json" \
+    --bf16 True \
+    --output_dir "output_Qwen_2.5-14B_output" \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 32 \
+    --per_device_eval_batch_size 32 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 1000 \
+    --save_total_limit 10 \
+    --learning_rate 1e-5 \
+    --weight_decay 0.1 \
+    --adam_beta2 0.95 \
+    --warmup_ratio 0.01 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --report_to "none" \
+    --model_max_length 4096 \
+    --gradient_checkpointing True \
+    --lazy_preprocess True \
+    --deepspeed "./ds_config_zero2.json" \
+    --use_lora
